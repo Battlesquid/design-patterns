@@ -13,10 +13,13 @@ export default class BallFactory {
     public getBallType(type: string, color: string): BallType {
         for (let i = 0; i < this.ballTypes.length; i++) {   
             const ballType = this.ballTypes[i];
-            if (ballType.getType() === type && ballType.getColor() === color)
+            if (ballType.getType() === type && ballType.getColor() === color) {
+                console.log(`[BallFactory]: Ball of type "${type}" already exists.`)
                 return this.ballTypes[i];
+            }
         }
 
+        console.log(`[BallFactory]: Creating ball of type "${type}"`)
         const newBallType = new BallType(type, color);
         this.ballTypes.push(newBallType);
 

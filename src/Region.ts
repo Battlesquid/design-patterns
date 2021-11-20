@@ -8,9 +8,9 @@ export default class Region {
     private widthBound: number = 0;
     private heightBound: number = 0;
 
-    constructor(world: World) {
-        this.widthBound = world.getWidth();
-        this.heightBound = world.getHeight();
+    constructor() {
+        this.widthBound = World.WIDTH;
+        this.heightBound = World.HEIGHT;
         this.pos.x = rand(this.widthBound);
         this.pos.y = rand(this.heightBound);
         console.log(this)
@@ -21,7 +21,7 @@ export default class Region {
         this.pos.x = rand(this.widthBound);
         this.pos.y = rand(this.heightBound);
         this.rad--
-        console.log(`Safe Location: (${this.pos.x}, ${this.pos.y}) with radius ${this.rad}`)
+        console.log(`[Region]: Location: (${this.pos.x}, ${this.pos.y}) with radius ${this.rad}`)
     }
 
     public getPos() {

@@ -7,11 +7,8 @@ import { Point2D, rand_vector, Vector2D } from "./vectors";
 import Region from "./Region";
 
 export default class World {
-    static readonly WIDTH: number;
-    static readonly HEIGHT: number;
-
-    private width: number;
-    private height: number;
+    static readonly WIDTH: number = 800;
+    static readonly HEIGHT: number = 600;
 
     private ballFactory = new BallFactory();
     private balls: Ball[] = [];
@@ -22,10 +19,11 @@ export default class World {
     private ticks: number = 0;
 
     constructor(canvas: HTMLCanvasElement) {
-        this.width = canvas.width;
-        this.height = canvas.height;
+        canvas.width = World.WIDTH;
+        canvas.height = World.HEIGHT
+
         this.renderer = new WorldRenderer(canvas)
-        this.rp = new RegionPublisher(this)
+        this.rp = new RegionPublisher()
 
         const balls = [{
             type: "slow",
@@ -46,13 +44,12 @@ export default class World {
 
         for (let i = 0; i < 50; i++) {
             const pos: Point2D = {
-                x: rand(this.width),
-                y: rand(this.height)
+                x: rand(World.WIDTH),
+                y: rand(World.HEIGHT)
             }
             const index = rand(3)
-            
+
             const v: Vector2D = rand_vector(60 / balls[index].size, 1)
-            console.log(v);
 
             const b: Ball = this.ballFactory.createBall(
                 pos, v,
@@ -66,14 +63,6 @@ export default class World {
         }
 
         requestAnimationFrame(this.draw.bind(this))
-    }
-
-    public getWidth() {
-        return this.width
-    }
-
-    public getHeight() {
-        return this.height
     }
 
     private draw() {
@@ -90,7 +79,7 @@ export default class World {
         this.renderer.getCtx().fill()
 
         for (let i = 0; i < this.balls.length; i++) {
-            this.balls[i].redraw(this.renderer.getCtx(), this)
+            this.balls[i].redraw(this.renderer.getCtx())
         }
 
         if (this.ticks % 500 == 0) {

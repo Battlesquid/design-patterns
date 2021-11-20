@@ -1,13 +1,12 @@
 import Region from "./Region";
-import World from "./World";
 import { Observer } from "./types";
 
 export default class RegionPublisher {
     private observers: Observer[] = [];
     private region: Region;
 
-    constructor(w: World) {
-        this.region = new Region(w);
+    constructor() {
+        this.region = new Region();
     }
 
     public subscribe(o: Observer) {
@@ -26,6 +25,7 @@ export default class RegionPublisher {
     }
 
     public notifyObservers() {
+        console.log(`[RegionPublisher]: Notifying ${this.observers.length} observers.`)
         for (const o of this.observers) {
             o.update(this.region);
         }

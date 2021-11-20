@@ -1,5 +1,4 @@
 import Ball from "./Ball";
-import { Point2D, v_angle } from "./vectors";
 import World from "./World";
 
 export default class BallType {
@@ -19,13 +18,13 @@ export default class BallType {
         return this.color;
     }
 
-    update(ctx: CanvasRenderingContext2D, ball: Ball, world: World) {
+    update(ctx: CanvasRenderingContext2D, ball: Ball) {
         ball.setX(ball.getX() + ball.getVx());
         ball.setY(ball.getY() + ball.getVy());
 
-        if (ball.getX() > world.getWidth() || ball.getX() < 0)
+        if (ball.getX() > World.WIDTH || ball.getX() < 0)
             ball.invertVX()
-        if (ball.getY() > world.getHeight() || ball.getY() < 0)
+        if (ball.getY() > World.HEIGHT || ball.getY() < 0)
             ball.invertVY()
 
         if (!ball.getIsSafe()) {

@@ -81,8 +81,8 @@ export default class Ball implements Observer {
         return this.isSafe
     }
 
-    public redraw(ctx: CanvasRenderingContext2D, world: World) {
-        this.ballType.update(ctx, this, world);
+    public redraw(ctx: CanvasRenderingContext2D) {
+        this.ballType.update(ctx, this);
     }
 
     public updateVelocity() {

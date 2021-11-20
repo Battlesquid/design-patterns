@@ -1,8 +1,8 @@
 import Ball from "./Ball";
+import { Point2D, v_angle } from "./vectors";
 import World from "./World";
 
 export default class BallType {
-    // some large-sized variable
     private type: string;
     private color: string;
 
@@ -24,9 +24,13 @@ export default class BallType {
         ball.setY(ball.getY() + ball.getVy());
 
         if (ball.getX() > world.getWidth() || ball.getX() < 0)
-            ball.invertVX();
+            ball.invertVX()
         if (ball.getY() > world.getHeight() || ball.getY() < 0)
-            ball.invertVY();
+            ball.invertVY()
+
+        if (!ball.getIsSafe()) {
+            ball.recalculateAngle()
+        }
 
         this.draw(ctx, ball);
     }
@@ -38,8 +42,14 @@ export default class BallType {
         ctx.ellipse(
             ball.getX(), ball.getY(),
             ball.getSize(), ball.getSize(),
-            0, 0, 360
+            ball.getAngle(), 0, 360
         );
         ctx.fill();
+        ctx.beginPath()
+        ctx.moveTo(ball.getX(), ball.getY())
+        const x = ball.getSize() * Math.cos(ball.getAngle())
+        const y = ball.getSize() * Math.sin(ball.getAngle())
+        ctx.lineTo(ball.getX() + x, ball.getY() + y)
+        ctx.stroke()
     }
 }

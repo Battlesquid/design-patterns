@@ -1,12 +1,13 @@
 import Ball from "./Ball";
 import BallType from "./BallType";
+import { Point2D, Vector2D } from "./vectors";
 
 export default class BallFactory {
     private ballTypes: BallType[] = [];
 
-    public createBall(initialX: number, initialY: number, initialVX: number, initialVY: number, type: string, size: number, color: string) {
+    public createBall(pos: Point2D, v: Vector2D, type: string, size: number, color: string, target: Point2D) {
         const ballType: BallType = this.getBallType(type, color);
-        return new Ball(initialX, initialY, initialVX, initialVY, size, ballType);
+        return new Ball(pos, v, size, ballType, target);
     }
 
     public getBallType(type: string, color: string): BallType {

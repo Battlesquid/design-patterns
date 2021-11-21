@@ -17,7 +17,7 @@ export default class RegionPublisher {
         return this.region;
     }
     public unsubscribe(o: Observer) {
-        this.observers = this.observers.filter(sb => sb !== o)
+        this.observers = this.observers.filter(ob => ob !== o)
     }
 
     public randomizeLoc() {

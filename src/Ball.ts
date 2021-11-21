@@ -2,7 +2,6 @@ import BallType from "./BallType";
 import Region from "./Region";
 import { Observer } from "./types";
 import { Point2D, Vector2D, v_angle, v_sub } from "./vectors";
-import World from "./World";
 
 export default class Ball implements Observer {
 

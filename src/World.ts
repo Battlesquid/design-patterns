@@ -2,7 +2,7 @@ import Ball from "./Ball";
 import BallFactory from "./BallFactory";
 import RegionPublisher from "./RegionPublisher";
 import WorldRenderer from "./WorldRenderer";
-import { rand, randColor } from "./util"
+import { rand } from "./util"
 import { Point2D, rand_vector, Vector2D } from "./vectors";
 import Region from "./Region";
 
@@ -17,6 +17,7 @@ export default class World {
     private rp: RegionPublisher;
 
     private ticks: number = 0;
+    private tickLimit: number = 1000
 
     constructor(canvas: HTMLCanvasElement) {
         canvas.width = World.WIDTH;
@@ -59,7 +60,8 @@ export default class World {
             )
 
             this.rp.subscribe(b)
-            this.balls.push(b);
+            
+            this.balls.push(b)
         }
 
         requestAnimationFrame(this.draw.bind(this))
@@ -82,7 +84,8 @@ export default class World {
             this.balls[i].redraw(this.renderer.getCtx())
         }
 
-        if (this.ticks % 500 == 0) {
+        if (this.ticks % this.tickLimit == 0) {
+            console.log(`[World]: Tick Limit reached.`)
             this.rp.randomizeLoc()
             this.rp.notifyObservers()
         }

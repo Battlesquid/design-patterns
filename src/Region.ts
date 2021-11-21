@@ -2,13 +2,14 @@ import Entity from "./Entity";
 import { rand } from "./util";
 import { Point2D } from "./vectors";
 
-export default class Region implements Entity {
+export default class Region extends Entity {
     private pos: Point2D = { x: 0, y: 0 }
     private rad: number;
     private widthBound: number;
     private heightBound: number;
 
     constructor(widthBound: number, heightBound: number) {
+        super()
         this.widthBound = widthBound;
         this.heightBound = heightBound;
         this.pos.x = rand(this.widthBound);

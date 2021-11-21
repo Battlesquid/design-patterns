@@ -6,7 +6,7 @@ import { rand } from "./util"
 import { Point2D, rand_vector, Vector2D } from "./vectors";
 import Entity from "./Entity";
 
-export default class World implements Entity {
+export default class World extends Entity {
     static readonly WIDTH: number = 800;
     static readonly HEIGHT: number = 600;
     static readonly GRID_SIZE: number = 100
@@ -21,6 +21,7 @@ export default class World implements Entity {
     private tickLimit: number = 1000
 
     constructor(canvas: HTMLCanvasElement) {
+        super()
         canvas.width = World.WIDTH;
         canvas.height = World.HEIGHT
 

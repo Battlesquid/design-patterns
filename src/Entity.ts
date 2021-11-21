@@ -1,3 +1,3 @@
-export default interface Entity {
-    draw(ctx: CanvasRenderingContext2D): void;
+export default abstract class Entity {
+    abstract draw(ctx: CanvasRenderingContext2D): void;
 }

@@ -4,7 +4,7 @@ import Region from "./Region";
 import { Observer } from "./types";
 import { Point2D, Vector2D, v_angle, v_sub } from "./vectors";
 
-export default class Ball implements Observer, Entity {
+export default class Ball extends Entity implements Observer {
 
     private pos: Point2D;
     private v: Vector2D;
@@ -14,6 +14,7 @@ export default class Ball implements Observer, Entity {
     private target: Point2D;
 
     constructor(pos: Point2D, v: Vector2D, size: number, ballType: BallType, target: Point2D) {
+        super()
         this.pos = pos; 
         this.v = v;
         this.size = size;

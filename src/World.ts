@@ -4,14 +4,15 @@ import RegionPublisher from "./RegionPublisher";
 import WorldRenderer from "./WorldRenderer";
 import { rand } from "./util"
 import { Point2D, rand_vector, Vector2D } from "./vectors";
-import Region from "./Region";
+import Entity from "./Entity";
 
-export default class World {
+export default class World implements Entity {
     static readonly WIDTH: number = 800;
     static readonly HEIGHT: number = 600;
+    static readonly GRID_SIZE: number = 100
 
     private ballFactory = new BallFactory();
-    private balls: Ball[] = [];
+    private entities: Entity[] = [];
 
     private renderer: WorldRenderer;
     private rp: RegionPublisher;
@@ -25,20 +26,18 @@ export default class World {
 
         this.renderer = new WorldRenderer(canvas)
         this.rp = new RegionPublisher()
-
+        this.entities.push(this)
+        this.entities.push(this.rp.getRegion())
         const balls = [{
             type: "slow",
-            weight: 0.5,
             size: 60,
             color: 'rgb(252, 186, 3)'
         }, {
             type: "normal",
-            weight: 0.3,
             size: 30,
             color: 'rgb(39, 100, 214)'
         }, {
             type: "fast",
-            weight: 0.2,
             size: 15,
             color: "rgb(173, 40, 173)"
         }]
@@ -60,34 +59,45 @@ export default class World {
             )
 
             this.rp.subscribe(b)
-            
-            this.balls.push(b)
+
+            this.entities.push(b)
         }
 
-        requestAnimationFrame(this.draw.bind(this))
+        requestAnimationFrame(this.update.bind(this))
     }
 
-    private draw() {
-        requestAnimationFrame(this.draw.bind(this))
+    private update() {
+        requestAnimationFrame(this.update.bind(this))
 
         this.ticks++
 
         this.renderer.clearCanvas()
 
-        const r: Region = this.rp.getRegion();
-        this.renderer.getCtx().fillStyle = "#00FF00";
-        this.renderer.getCtx().beginPath()
-        this.renderer.getCtx().ellipse(r.getX(), r.getY(), r.getRad(), r.getRad(), 0, 0, 360)
-        this.renderer.getCtx().fill()
-
-        for (let i = 0; i < this.balls.length; i++) {
-            this.balls[i].redraw(this.renderer.getCtx())
+        for (const entity of this.entities) {
+            entity.draw(this.renderer.getCtx())
         }
 
         if (this.ticks % this.tickLimit == 0) {
             console.log(`[World]: Tick Limit reached.`)
-            this.rp.randomizeLoc()
+            this.rp.changeLocation()
             this.rp.notifyObservers()
         }
+    }
+
+    public draw(ctx: CanvasRenderingContext2D) {
+        ctx.save()
+        ctx.fillStyle = "#111111"
+        ctx.fillRect(0, 0, World.WIDTH, World.HEIGHT)
+        ctx.strokeStyle = "#404040"
+        ctx.lineWidth = 0.1
+        for (let i = 0; i < World.WIDTH / World.GRID_SIZE; i++) {
+            ctx.moveTo(0, i * World.GRID_SIZE)
+            ctx.lineTo(World.WIDTH, i * World.GRID_SIZE)
+            ctx.stroke()
+            ctx.moveTo(i * World.GRID_SIZE, 0)
+            ctx.lineTo(i * World.GRID_SIZE, World.HEIGHT)
+            ctx.stroke()
+        }
+        ctx.restore()
     }
 }

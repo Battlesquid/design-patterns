@@ -1,23 +1,22 @@
+import Entity from "./Entity";
 import { rand } from "./util";
 import { Point2D } from "./vectors";
-import World from "./World";
 
-export default class Region {
-    private pos: Point2D = {x: 0, y: 0}
-    private rad: number = 0;
-    private widthBound: number = 0;
-    private heightBound: number = 0;
+export default class Region implements Entity {
+    private pos: Point2D = { x: 0, y: 0 }
+    private rad: number;
+    private widthBound: number;
+    private heightBound: number;
 
-    constructor() {
-        this.widthBound = World.WIDTH;
-        this.heightBound = World.HEIGHT;
+    constructor(widthBound: number, heightBound: number) {
+        this.widthBound = widthBound;
+        this.heightBound = heightBound;
         this.pos.x = rand(this.widthBound);
         this.pos.y = rand(this.heightBound);
-        console.log(this)
         this.rad = rand(100, 40);
     }
 
-    public randomizeLoc() {
+    public changeLocation() {
         this.pos.x = rand(this.widthBound);
         this.pos.y = rand(this.heightBound);
         this.rad--
@@ -28,15 +27,15 @@ export default class Region {
         return this.pos;
     }
 
-    public getX() {
-        return this.pos.x;
-    }
-
-    public getY() {
-        return this.pos.y;
-    }
-
-    public getRad() {
-        return this.rad;
+    public draw(ctx: CanvasRenderingContext2D) {
+        ctx.save()
+        const color = "rgb(96, 245, 66)"
+        ctx.shadowColor = color
+        ctx.shadowBlur = 10
+        ctx.strokeStyle = color
+        ctx.beginPath()
+        ctx.ellipse(this.pos.x, this.pos.y, this.rad, this.rad, 0, 0, 360)
+        ctx.stroke()
+        ctx.restore()
     }
 }

@@ -1,9 +1,10 @@
 import BallType from "./BallType";
+import Entity from "./Entity";
 import Region from "./Region";
 import { Observer } from "./types";
 import { Point2D, Vector2D, v_angle, v_sub } from "./vectors";
 
-export default class Ball implements Observer {
+export default class Ball implements Observer, Entity {
 
     private pos: Point2D;
     private v: Vector2D;
@@ -13,7 +14,7 @@ export default class Ball implements Observer {
     private target: Point2D;
 
     constructor(pos: Point2D, v: Vector2D, size: number, ballType: BallType, target: Point2D) {
-        this.pos = pos;
+        this.pos = pos; 
         this.v = v;
         this.size = size;
         this.ballType = ballType;
@@ -80,7 +81,7 @@ export default class Ball implements Observer {
         return this.isSafe
     }
 
-    public redraw(ctx: CanvasRenderingContext2D) {
+    public draw(ctx: CanvasRenderingContext2D) {
         this.ballType.update(ctx, this);
     }
 
@@ -97,7 +98,7 @@ export default class Ball implements Observer {
         this.setAngle(this.getAngle() + dir * 0.2);
         this.updateVelocity()
 
-        if (this.getAngle().toPrecision(2) === angle.toPrecision(2)) this.isSafe = true
+        if (this.getAngle().toPrecision(1) === angle.toPrecision(1)) this.isSafe = true
 
     }
 

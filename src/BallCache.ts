@@ -2,7 +2,7 @@ import Ball from "./Ball";
 import BallType from "./BallType";
 import { Point2D, Vector2D } from "./vectors";
 
-export default class BallFactory {
+export default class BallCache {
     private ballTypes: BallType[] = [];
 
     public createBall(pos: Point2D, v: Vector2D, type: string, size: number, color: string, target: Point2D) {

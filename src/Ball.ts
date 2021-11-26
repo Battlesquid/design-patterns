@@ -7,7 +7,7 @@ import { Point2D, Vector2D, v_angle, v_sub } from "./vectors";
 export default class Ball extends Entity implements Observer {
 
     private pos: Point2D;
-    private v: Vector2D;
+    private vel: Vector2D;
     private size: number;
     private ballType: BallType;
     private isSafe: boolean = true;
@@ -16,7 +16,7 @@ export default class Ball extends Entity implements Observer {
     constructor(pos: Point2D, v: Vector2D, size: number, ballType: BallType, target: Point2D) {
         super()
         this.pos = pos; 
-        this.v = v;
+        this.vel = v;
         this.size = size;
         this.ballType = ballType;
         this.target = target
@@ -39,27 +39,27 @@ export default class Ball extends Entity implements Observer {
     }
 
     public getVx() {
-        return this.v.x;
+        return this.vel.x;
     }
 
     public getVy() {
-        return this.v.y;
+        return this.vel.y;
     }
 
     public setVX(vx: number) {
-        this.v.x = vx;
+        this.vel.x = vx;
     }
 
     public setVY(vy: number) {
-        this.v.y = vy;
+        this.vel.y = vy;
     }
 
     public invertVX() {
-        this.v.x *= -1;
+        this.vel.x *= -1;
     }
 
     public invertVY() {
-        this.v.y *= -1;
+        this.vel.y *= -1;
     }
 
     public getSize() {
@@ -67,11 +67,11 @@ export default class Ball extends Entity implements Observer {
     }
 
     public getAngle() {
-        return this.v.theta;
+        return this.vel.theta;
     }
 
     public setAngle(angle: number) {
-        this.v.theta = angle;
+        this.vel.theta = angle;
     }
 
     public getBallType() {
@@ -87,8 +87,8 @@ export default class Ball extends Entity implements Observer {
     }
 
     public updateVelocity() {
-        this.setVX(Math.cos(this.getAngle()) * this.v.mag)
-        this.setVY(Math.sin(this.getAngle()) * this.v.mag)
+        this.setVX(Math.cos(this.getAngle()) * this.vel.mag)
+        this.setVY(Math.sin(this.getAngle()) * this.vel.mag)
     }
 
     public recalculateAngle() {

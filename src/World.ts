@@ -1,5 +1,5 @@
 import Ball from "./Ball";
-import BallFactory from "./BallFactory";
+import BallCache from "./BallCache";
 import RegionPublisher from "./RegionPublisher";
 import WorldRenderer from "./WorldRenderer";
 import { rand } from "./util"
@@ -11,7 +11,7 @@ export default class World extends Entity {
     static readonly HEIGHT: number = 600;
     static readonly GRID_SIZE: number = 100
 
-    private ballFactory = new BallFactory();
+    private ballCache = new BallCache();
     private entities: Entity[] = [];
 
     private renderer: WorldRenderer;
@@ -52,7 +52,7 @@ export default class World extends Entity {
 
             const v: Vector2D = rand_vector(60 / balls[index].size, 1)
 
-            const b: Ball = this.ballFactory.createBall(
+            const b: Ball = this.ballCache.createBall(
                 pos, v,
                 balls[index].type, balls[index].size / 5,
                 balls[index].color,

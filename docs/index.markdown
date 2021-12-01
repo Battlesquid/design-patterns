@@ -145,10 +145,6 @@ I then decided to create a new category of powerups that could not be consumable
     <canvas class="factory"></canvas>
 </div>
 <br>
-{% include_relative includes/structural.html %}
-{% include_relative includes/behavioral.html %}
-{% include_relative includes/creational.html %}
-
 
 # Concluding Remarks
 I learned a lot by researching and implementing different design patterns. There are two things I think I should note as I conclude:
@@ -160,3 +156,7 @@ I learned a lot by researching and implementing different design patterns. There
 Using these patterns allowed me to see how they can make what would be an otherwise messy solution into a clean solution. They can be implemented into nearly any language, which is great because you don't have to worry about missing features across languages. 
 
 **However**, design patterns should only be used when they make sense to use them. Although I was able to combine all three design patterns into one project, there are much better ways to implement certain features of the simulation program. When applying any design pattern, you have to be certain that you are using the right tool for the job, otherwise it will lead to more confusion later down the road.
+
+{% include_relative includes/structural.html %}
+{% include_relative includes/behavioral.html %}
+{% include_relative includes/creational.html %}

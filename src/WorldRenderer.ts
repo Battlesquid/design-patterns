@@ -1,3 +1,5 @@
+import Entity from "./Entity";
+
 export default class WorldRenderer {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
@@ -7,11 +9,13 @@ export default class WorldRenderer {
         this.ctx = <CanvasRenderingContext2D>this.canvas.getContext("2d")
     }
 
-    public clearCanvas() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    public render(entities: Entity[]) {
+        for (const entity of entities) {
+            entity.draw(this.ctx)
+        }
     }
 
     public getCtx() {
-        return this.ctx;
+        return this.ctx
     }
 }

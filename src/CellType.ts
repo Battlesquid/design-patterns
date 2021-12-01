@@ -1,4 +1,4 @@
-import Ball from "./Ball";
+import Cell from "./entities/Cell";
 import World from "./World";
 
 export default class BallType {
@@ -30,38 +30,42 @@ export default class BallType {
             this.type === type
     }
 
-    update(ctx: CanvasRenderingContext2D, ball: Ball) {
-        ball.setX(ball.getX() + ball.getVx());
-        ball.setY(ball.getY() + ball.getVy());
+    update(ctx: CanvasRenderingContext2D, ball: Cell) {
 
-        if (ball.getX() > World.WIDTH || ball.getX() < 0)
+        if (ball.getX() > World.WIDTH - ball.getSize() || ball.getX() < ball.getSize())
             ball.invertVX()
-        if (ball.getY() > World.HEIGHT || ball.getY() < 0)
+        if (ball.getY() > World.HEIGHT - ball.getSize() || ball.getY() < ball.getSize())
             ball.invertVY()
 
-        if (!ball.getIsSafe()) {
-            ball.recalculateAngle()
-        }
+        if (!ball.isDormant())
+            ball.updatePosition()
 
         this.draw(ctx, ball);
     }
 
-    private draw(ctx: CanvasRenderingContext2D, ball: Ball) {
+    private draw(ctx: CanvasRenderingContext2D, ball: Cell) {
         ctx.save()
-        ctx.shadowColor = ball.getBallType().getColor();
+
+        let color = ball.isDormant() ? "rgb(105, 0, 18)" : ball.getCellType().getColor()
+        color = ball.isAlive() ? color : "rgb(44, 44, 44)"
+
+        ctx.shadowColor = color
         ctx.shadowBlur = 10
-        ctx.strokeStyle = ball.getBallType().getColor();
+        ctx.strokeStyle = color
         ctx.beginPath();
         ctx.ellipse(
             ball.getX(), ball.getY(),
             ball.getSize(), ball.getSize(),
-            ball.getAngle(), 0, 360
+            0, 0, 360
         );
         ctx.stroke()
+
+        const angle = Math.atan2(ball.getVy(), ball.getVx())
+        const x = ball.getSize() * Math.cos(angle)
+        const y = ball.getSize() * Math.sin(angle)
+
         ctx.beginPath()
         ctx.moveTo(ball.getX(), ball.getY())
-        const x = ball.getSize() * Math.cos(ball.getAngle())
-        const y = ball.getSize() * Math.sin(ball.getAngle())
         ctx.lineTo(ball.getX() + x, ball.getY() + y)
         ctx.stroke()
         ctx.restore()

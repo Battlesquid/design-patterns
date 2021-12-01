@@ -145,9 +145,9 @@ I then decided to create a new category of powerups that could not be consumable
     <canvas class="factory"></canvas>
 </div>
 <br>
-{% include structural.html %}
-{% include behavioral.html %}
-{% include creational.html %}
+{% include_relative includes/structural.html %}
+{% include_relative includes/behavioral.html %}
+{% include_relative includes/creational.html %}
 
 
 # Concluding Remarks
